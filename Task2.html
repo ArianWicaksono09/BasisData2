@@ -195,7 +195,8 @@
 
 
                                 2. PostgreSQL<br>
-                                menjelaskan query, yang ditampilkan rencana eksekusi yang dipilih untuk kueri yang ditentukan query
+                                menjelaskan query, yang ditampilkan rencana eksekusi yang dipilih untuk kueri yang
+                                ditentukan query
                             </p>
                         </div>
                     </div>
@@ -224,7 +225,78 @@
 
                             </p>
                         </div>
-                    </div> 
+                    </div>
+
+                    <div class="col-md-12" data-aos="fade-up" data-aos-delay="300">
+                        <div class="about-col">
+                            <H2 style="text-align: center;">Contoh Menampilkan Evaluation Plan Pada MySQL</h2>
+                            <img src="gambar/1.PNG" class="img-fluid" alt="Responsive image">
+                            <img src="gambar/2.PNG" class="img-fluid" alt="Responsive image">
+                            <img src="gambar/6.PNG" class="img-fluid" alt="Responsive image">
+                            <img src="gambar/5.PNG" class="img-fluid" alt="Responsive image">
+                            <img src="gambar/4.PNG" class="img-fluid" alt="Responsive image">
+
+                            <p style="text-align: justify;">
+                                Penjelasan dari tabel di atas, Setiap baris di EXPLAIN berisi bidang berikut:<br>
+                                • <strong>id</strong> - Dalam kebanyakan kasus, bidang id akan menampilkan nomor urut SELECT query untuk
+                                baris yang di miliki. Kueri di atas tidak berisi subkueri atau gabungan, jadi id untuk
+                                kedua baris adalah 1, karena sebenarnya hanya ada 1 kueri.<br>
+                                • <strong>select_type</strong> - jenis SELECT query dalam kasus ini adalah simple query karena tidak
+                                berisi subkueri atau gabungan. Dalam kasus yang lebih kompleks, ini akan berisi tipe
+                                lain seperti SUBQUERY (untuk subkueri), UNION (pernyataan kedua atau yang lebih baru
+                                dalam sebuah gabungan), DERIVED (tabel turunan) dan lainnya. Informasi lebih lanjut
+                                tentang access_types dapat ditemukan di dokumen MySQL.<br>
+                                • <strong>table</strong> - nama tabel atau alias yang dirujuk baris ini. Pada gambar di atas, Anda dapat
+                                melihat 'v' dan 'p' disebutkan, karena itu adalah alias yang ditentukan untuk tabel
+                                suara dan posting.<br>
+                                • <strong>type</strong> - mendefinisikan bagaimana tabel diakses / digabungkan. Jenis akses paling
+                                populer yang biasanya akan Anda lihat adalah yang berikut, diurutkan dari yang terburuk
+                                hingga yang terbaik: ALL, index, range, ref, eq_ref, const, system. Seperti yang Anda
+                                lihat di JELASKAN, suara tabel adalah tabel pertama yang diakses, menggunakan ALL
+                                access_type, yang berarti MySQL akan memindai seluruh tabel, tanpa indeks, sehingga akan
+                                melalui lebih dari 14 juta catatan. Tabel posting kemudian diakses menggunakan tipe
+                                akses eq_ref. Selain tipe sistem dan konst, eq_ref adalah tipe gabungan terbaik.
+                                Database akan mengakses satu baris dari tabel ini untuk setiap kombinasi baris dari
+                                tabel sebelumnya.<br>
+                                • <strong>possible_keys</strong> - Indeks opsional yang dapat dipilih MySQL, untuk mencari baris dalam
+                                tabel. Beberapa indeks dalam daftar ini sebenarnya tidak relevan, sebagai hasil dari
+                                urutan eksekusi yang dipilih MySQL. Secara umum, MySQL dapat menggunakan indeks untuk
+                                menggabungkan tabel. Dengan demikian, ia tidak akan menggunakan indeks pada kolom
+                                gabungan tabel pertama, karena ia akan tetap melalui semua barisnya (kecuali baris yang
+                                difilter oleh klausa WHERE).<br>
+                                • <strong>key</strong> - Kolom ini menunjukkan indeks sebenarnya yang memutuskan untuk digunakan MySQL.
+                                Ini tidak berarti ia akan menggunakan seluruh indeks, karena ia dapat memilih untuk
+                                menggunakan hanya sebagian dari indeks, dari sisi paling kiri.<br>
+                                • <strong>key_len</strong> - Ini adalah salah satu kolom penting dalam output penjelasan. Ini menunjukkan
+                                panjang kunci yang memutuskan untuk digunakan MySQL, dalam byte. Dalam EXPLAIN output di
+                                atas, MySQL menggunakan seluruh indeks PRIMARY (4 byte). Kita tahu itu karena
+                                satu-satunya kolom di indeks PRIMARY adalah Id, yang didefinisikan sebagai INT => 4
+                                byte. Sayangnya, tidak ada cara yang lebih mudah untuk mengetahui bagian mana dari
+                                indeks yang digunakan oleh MySQL, selain menggabungkan panjang semua kolom dalam indeks
+                                dan membandingkannya dengan nilai key_len.<br>
+                                • <strong>rows</strong> - Menunjukkan jumlah baris yang menurut MySQL harus diperiksa dari tabel ini,
+                                untuk menjalankan kueri. Ini hanya perkiraan. Biasanya, jumlah baris yang tinggi berarti
+                                ada ruang untuk pengoptimalan kueri.<br>
+                                • <strong>filtered</strong> - Jumlah baris yang tidak difilter oleh kondisi di klausa WHERE. Baris ini
+                                akan digabungkan ke tabel di baris berikutnya dari rencana MENJELASKAN. Seperti yang
+                                disebutkan sebelumnya, ini juga angka perkiraan, jadi MySQL bisa salah dengan perkiraan
+                                ini.<br>
+                                • <strong>extra</strong> - Berisi lebih banyak informasi tentang pemrosesan kueri. Mari kita lihat ekstra
+                                untuk kueri kita:<br>
+                                1. using where - Klausa WHERE digunakan untuk membatasi baris mana yang diambil dari
+                                tabel saat ini (suara) dan dicocokkan dengan tabel berikutnya (posting).<br>
+                                2. using temporary - Sebagai bagian dari pemrosesan kueri, MySQL harus membuat tabel
+                                sementara, yang dalam banyak kasus dapat mengakibatkan penalti kinerja. Dalam kebanyakan
+                                kasus, ini akan menunjukkan bahwa salah satu klausa ORDER BY atau GROUP BY dijalankan
+                                tanpa menggunakan indeks. Ini juga bisa terjadi jika klausa GROUP BY dan ORDER BY
+                                menyertakan kolom berbeda (atau dalam urutan berbeda).<br>
+                                3. using filesort - MySQL dipaksa untuk melakukan penerusan lain pada hasil kueri untuk
+                                mengurutkannya. Dalam banyak kasus, ini juga dapat mengakibatkan penalti kinerja.<br>
+
+
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
             </div>
