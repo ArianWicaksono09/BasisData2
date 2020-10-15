@@ -198,7 +198,7 @@
                             harus bekerja tanpa terlewatkan maupun memastikan tidak terjadi kesalahan pada satu step
                             pun.<br><br>
 
-                            <strong>2. Consistency</strong>
+                            <strong>2. Consistency</strong><br>
                             Berdasarkan contoh kasus diatas, Misalkan :<br>
                             Sebelum transaksi saldo_A = 2.000.000 dan saldo_koperasi = 5.000.000 jika di total =
                             7.000.000<br>
@@ -206,14 +206,14 @@
                             7.000.000<br> Jadi bisa di lihat bahwa total saldo sebelum dan dan sesudah transaksi tetap
                             konsisten atau tidak berubah.<br><br>
 
-                            <strong>3. Isolation</strong>
+                            <strong>3. Isolation</strong><br>
                             berarti bahwa satu transaksi tidak dapat membaca data dari transaksi lain yang belum
                             selesai. Jika dua transaksi dieksekusi secara bersamaan, masing-masing akan melihat dunia
                             seolah-olah mereka mengeksekusi secara berurutan, dan jika satu perlu membaca data yang
                             ditulis oleh yang lain, itu harus menunggu sampai step yang lain selesai. Atau dengan kata
                             lain isolasi ini dapat dilakukan dengan menjalankan transaksi secara step by step.<br><br>
 
-                            <strong>4. Durability </strong>
+                            <strong>4. Durability </strong><br>
                             Setelah semua operasi dilakukan (yaitu proses transfer Si A ke koperasi), maka data hasil
                             operasi akan tersimpan dan tidak akan hilang. Karena transaksi yang terjadi disimpan dalam
                             database untuk menghindari kehilangan data jika sistemnya bermasalah.
